@@ -6,12 +6,13 @@ from app.modules.employee.schema import EmployeeCreate, EmployeeUpdate
 
 ## create a new employee
 def create_employee(db: Session, employee: EmployeeCreate):
+    hashed_password = hash_password(employee.password)
     db_employee = Employee(
         name=employee.name,
         email=employee.email,
         phone=employee.phone,
         dob=employee.dob,
-        password=employee.password,
+        password_hash=hashed_password,
         status=employee.status,
         gender=employee.gender,
         role_id=employee.role_id,
