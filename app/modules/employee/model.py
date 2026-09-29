@@ -11,7 +11,7 @@ class Employee(Base):
     email = Column(String(100), unique=True,nullable=False)
     phone = Column(String(15),unique=True,nullable=True)
     dob = Column(Date,nullable=True)
-    password = Column(String(100),nullable=False)
+    password_hash = Column(String(100),nullable=False)
     status = Column(String(10),nullable=False,default='active')
     gender = Column(String(10),nullable=True)
 
