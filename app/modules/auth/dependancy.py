@@ -1,4 +1,4 @@
-# here we just validate whether the user is allowed to access those services or not
+# here we just validate whether the user is allowed to access those services or not.
 # such as employee is not allowed to create another new employee.
 from fastapi import Depends,HTTPException,status
 from fastapi.security import OAuth2PasswordBearer
