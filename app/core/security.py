@@ -29,6 +29,12 @@ def create_access_token(data:dict, expires_delta:timedelta=None):
 
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
+def decode_access_toke(token:str):
+    try:
+        payload = jwt.decode(token,SECRET_KEY,algorithms=[ALGORITHM]) # We currently have one algo but may be in future we have more algo thats why.
+        return payload
+    except jwt.InvalidTokenError :
+
 
 
 
