@@ -14,6 +14,7 @@ class Employee(Base):
     password_hash = Column(String(100),nullable=False)
     status = Column(String(10),nullable=False,default='active')
     gender = Column(String(10),nullable=True)
+    remaining_leave_days = Column(Integer,nullable=False,default=25)
 
     role_id = Column(Integer,ForeignKey('roles.role_id'),nullable=False)
     department_id = Column(Integer,ForeignKey('departments.department_id'),nullable=False)
