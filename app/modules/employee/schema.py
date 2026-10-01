@@ -48,6 +48,7 @@ class EmployeeResponse(BaseModel):
     role: str = Field(..., description="Employee role")
     manager_id: Optional[int] = Field(None, description="Employee manager ID")
     dob: Optional[date] = Field(None, description="Employee date of birth")
+    remaining_leave_days: int = Field(..., description="Remaining leave days for the employee")
 
     class Config:
         from_attributes = True 
