@@ -1,6 +1,6 @@
 from fastapi import Depends,HTTPException,APIRouter
 from sqlalchemy.orm import Session
-from app.modules.attendance.schema import AttendanceResponse
+from app.modules.attendance.schema import AttendanceResponse, MonthlyAttendanceSummary
 from app.core.database import get_db
 from app.modules.attendance import service
 from app.modules.auth.dependancy import require_roles
@@ -22,7 +22,7 @@ def check_in(employee_id:int,db:Session=Depends(get_db)):
     return db_attendance
 
 @router.post('/check_out',dependencies=[Depends(require_roles("Employee"))],response_model=AttendanceResponse)
-def check_out(employee_id:int,db=Depends(get_db)):
+def check_out(employee_id:int,db:Session=Depends(get_db)):
     db_attendance = service.check_out(db,employee_id)
 
     if not db_attendance:
@@ -31,3 +31,13 @@ def check_out(employee_id:int,db=Depends(get_db)):
             detail ="Invalid check-out request"
         )
     return db_attendance
+
+@router.get('/monthly_summary',dependencies=[Depends(require_roles("Admin","Manager"))],response_model=MonthlyAttendanceSummary)
+def get_monthly_attendance_summary(employee_id:int,month:int,year:int,db:Session=Depends(get_db)):
+    db_summary = service.get_monthly_attendance_summary(db,employee_id,month,year)
+    if not db_summary:
+        raise HTTPException(
+            status_code=404,
+            detail="No attendance records found for the specified period"
+        )
+    return db_summary
