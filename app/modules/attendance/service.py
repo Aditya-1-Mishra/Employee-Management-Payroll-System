@@ -1,6 +1,7 @@
 from app.modules.attendance.model import Attendance
 from sqlalchemy.orm import Session
 from datetime import datetime
+from sqlalchemy import extract
 
 def check_in(db:Session,employee_id:int):
     today = datetime.now().date()
@@ -34,3 +35,20 @@ def check_out(db:Session,employee_id:int):
     db.refresh(attendance)
 
     return attendance
+
+def get_monthly_attendance_summary(db:Session,employee_id:int,month:int,year:int):
+    present_days = db.query(Attendance).filter(
+        Attendance.employee_id == employee_id,
+        extract('month',Attendance.attendanceDate) == month,
+        extract('year',Attendance.attendanceDate)==year
+    ).count()
+
+    if present_days == 0:
+        return None
+
+    return {
+        "employee_id": employee_id,
+        "month": month,
+        "year": year,
+        "present_days": present_days
+    }
