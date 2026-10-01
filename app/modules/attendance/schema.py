@@ -10,3 +10,12 @@ class AttendanceResponse(BaseModel):
 
     class Config:
         from_attributes=True
+
+class MonthlyAttendanceSummary(BaseModel):
+    employee_id : int
+    month : int
+    year : int
+    present_days : int
+
+    class Config:
+        from_attributes=True
