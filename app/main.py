@@ -3,6 +3,11 @@ from app.modules.employee.route import router as employee_router
 from app.modules.department.route import router as department_router
 from app.modules.designation.route import router as designation_router
 from app.modules.auth.route import router as auth_router
+from app.modules.attendance.route import router as attendance_router
+from app.modules.leave.route import router as leave_router
+from app.modules.payroll.route import router as payroll_router
+from app.modules.salary_structure.route import router as salary_router
+from app.modules.roles.route import router as roles_router
 from app.core.database import Base, engine
 
 ## execute this command to create all tables in the database
@@ -12,6 +17,11 @@ app.include_router(auth_router)
 app.include_router(employee_router)
 app.include_router(department_router)
 app.include_router(designation_router)
+app.include_router(attendance_router)
+app.include_router(leave_router)
+app.include_router(payroll_router)
+app.include_router(salary_router)
+app.include_router(roles_router)
 
 @app.get("/")
 def read_root():
