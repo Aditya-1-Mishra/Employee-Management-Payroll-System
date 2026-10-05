@@ -1,12 +1,12 @@
 from sqlalchemy import create_engine , text
 from sqlalchemy.orm import sessionmaker,declarative_base
+from dotenv import load_dotenv
+import os
 
-database_url = ( 
-    "mssql+pyodbc://@LAPTOP-TOD3072S/employeepayrolldb"
-    "?driver=ODBC+driver+18+for+SQL+Server"
-    "&trusted_connection=yes"
-    "&TrustServerCertificate=yes"
-)
+load_dotenv()
+database_url = os.getenv("database_url")
+if not database_url:
+    raise RuntimeError("database_url environment variable is not set.")
 engine = create_engine(database_url)
 
 sessionLocal = sessionmaker(
