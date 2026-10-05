@@ -8,6 +8,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
+
+if not SECRET_KEY:
+    raise RuntimeError("SECRET_KEY environment variable is not set.")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
@@ -34,8 +37,6 @@ def decode_access_token(token:str):
         payload = jwt.decode(token,SECRET_KEY,algorithms=[ALGORITHM]) # We currently have one algo but may be in future we have more algo thats why.
         return payload
     except jwt.InvalidTokenError :
-
-
-
+        return None
 
 # print(SECRET_KEY)
